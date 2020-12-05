@@ -6,49 +6,46 @@ import Star from 'components/common/Icons/Star';
 import Fork from 'components/common/Icons/Fork';
 import { Wrapper, Grid, Item, Content, Stats, Languages } from './styles';
 
-export const Projects = () => {
-  const { theme } = useContext(ThemeContext);
-  const {
-    github: {
-      viewer: {
-        repositories: { edges },
-      },
-    },
-  } = useStaticQuery(
-    graphql`
-      {
-        github {
-          viewer {
-            repositories(first: 8, orderBy: { field: STARGAZERS, direction: DESC }) {
-              edges {
-                node {
-                  id
-                  name
-                  url
-                  description
-                  stargazers {
-                    totalCount
-                  }
-                  forkCount
-                  languages(first: 3) {
-                    nodes {
-                      id,
-                      name
-                    }
-                  }
-                }
+const getData = graphql`
+{
+  github {
+    viewer {
+      repositories(first: 8, orderBy: { field: STARGAZERS, direction: DESC }) {
+        edges {
+          node {
+            id
+            name
+            url
+            description
+            stargazers {
+              totalCount
+            }
+            forkCount
+            languages(first: 3) {
+              nodes {
+                id,
+                name
               }
             }
           }
         }
       }
-    `
-  );
+    }
+  }
+}
+`
+
+export const Projects = () => {
+  const { theme } = useContext(ThemeContext);
+
+  const data = useStaticQuery(getData)
+  const projects = data.github.viewer.repositories.edges 
+
   return (
     <Wrapper as={Container} id="projects">
       <h2>Projects</h2>
       <Grid>
-        {edges.map(({ node }) => (
+        {projects.map(({ node }) => (
           <Item key={node.id} as="a" href={node.url} target="_blank" rel="noopener noreferrer" theme={theme}>
             <Card theme={theme}>
               <Content>
