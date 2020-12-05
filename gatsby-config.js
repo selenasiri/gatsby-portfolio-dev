@@ -11,6 +11,16 @@ module.exports = {
     author: config.author,
   },
   plugins: [
+
+    'gatsby-transformer-screenshot', 
+    'gatsby-transformer-yaml', 
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/data/`
+      }
+    },
+
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-transformer-sharp',
