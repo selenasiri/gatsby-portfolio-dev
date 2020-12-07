@@ -11,16 +11,6 @@ module.exports = {
     author: config.author,
   },
   plugins: [
-
-    'gatsby-transformer-screenshot', 
-    'gatsby-transformer-yaml', 
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/src/data/`
-      }
-    },
-
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-transformer-sharp',
@@ -32,7 +22,7 @@ module.exports = {
         fieldName: 'github',
         url: 'https://api.github.com/graphql',
         headers: {
-          Authorization: `bearer ${process.env.GATSBY_PORTFOLIO_GITHUB_TOKEN}`,
+          Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
         },
         fetchOptions: {},
       },
@@ -82,5 +72,21 @@ module.exports = {
       },
     },
     'gatsby-plugin-offline',
+
+    `gatsby-transformer-screenshot`,
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      },
+    },
   ],
 };
+
+// https://github.com/smakosh/gatsby-portfolio-dev
+// This removes the .cache/ & public/ folders
+// yarn reset
+// yarn add <pkg>
+// Run yarn && yarn start
+// yarn v1.17.3
